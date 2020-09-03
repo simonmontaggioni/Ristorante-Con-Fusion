@@ -21,36 +21,23 @@ class DishDetail extends Component {
   }
   renderComments(comments) {
     if (comments != null) {
-      let months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ];
       return (
         <div>
           <h4 className='text-left'>Comments</h4>
           <ul className='p-0'>
             {comments.map((comment) => {
-              let commentDate = new Date(comment.date);
               return (
                 <li key={comment.id} className='list-unstyled mb-3'>
                   <div className='col-12 p-0 text-left'>{comment.comment}</div>
                   <div className='col-12 p-0 text-left'>
                     <span className='ml-1'>-- {comment.author},</span>
                     <span className='ml-1'>
-                      {months[commentDate.getMonth()]}
+                      {new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit',
+                      }).format(new Date(Date.parse(comment.date)))}
                     </span>
-                    <span className='ml-1'>{commentDate.getDay()},</span>
-                    <span className='ml-1'>{commentDate.getFullYear()}</span>
                   </div>
                 </li>
               );
