@@ -9,10 +9,10 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-function RenderLeader(leader) {
+function RenderLeader({ leader }) {
   console.log(leader.image);
   return (
-    <Media>
+    <Media className='mb-4'>
       <Media left href='#'>
         <Media
           className='mr-4'
@@ -34,7 +34,7 @@ function RenderLeader(leader) {
 
 function About(props) {
   const leaders = props.leaders.map((leader) => {
-    return <p key={leader.id}>Leader {leader.name}</p>;
+    return <RenderLeader leader={leader} />;
   });
 
   return (
@@ -115,7 +115,6 @@ function About(props) {
         <div className='col-12'>
           <Media list>{leaders}</Media>
         </div>
-        <div>{RenderLeader(props.leaders[0])}</div>
       </div>
     </div>
   );
