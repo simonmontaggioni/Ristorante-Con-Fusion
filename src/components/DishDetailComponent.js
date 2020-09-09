@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Card,
   CardImg,
@@ -7,6 +7,10 @@ import {
   CardTitle,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -27,6 +31,38 @@ function RenderDish({ dish }) {
     return <div></div>;
   }
 }
+
+class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.toggleModal = this.toggleModal.bind(this);
+
+    this.state = {
+      isModalOpen: false,
+    };
+  }
+
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
+  }
+  render() {
+    return (
+      <div>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleModal}>Comment Form</ModalHeader>
+          <ModalBody>Comment body</ModalBody>
+        </Modal>
+        <Button outline onClick={this.toggleModal}>
+          <span className='fa fa-pencil fa-lg'></span> Submit Comment
+        </Button>
+      </div>
+    );
+  }
+}
+
 function RenderComments({ comments }) {
   if (comments != null) {
     return (
@@ -51,6 +87,9 @@ function RenderComments({ comments }) {
             );
           })}
         </ul>
+        <div>
+          <CommentForm></CommentForm>
+        </div>
       </div>
     );
   } else return <div></div>;
