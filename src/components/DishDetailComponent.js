@@ -15,7 +15,7 @@ import {
   Col,
   Label,
 } from 'reactstrap';
-import { Control, LocalForm } from 'react-redux-form';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
 function RenderDish({ dish }) {
@@ -36,15 +36,19 @@ function RenderDish({ dish }) {
   }
 }
 
+const required = (value) => value && value.length;
+const maxLength = (length) => (value) => !value || value.length <= length;
+const minLength = (length) => (value) => value && value.length >= length;
 class CommentForm extends Component {
   constructor(props) {
     super(props);
 
-    this.toggleModal = this.toggleModal.bind(this);
-
     this.state = {
       isModalOpen: false,
     };
+
+    this.toggleModal = this.toggleModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   toggleModal() {
@@ -75,11 +79,11 @@ class CommentForm extends Component {
                     name='rating'
                     className='form-control'
                   >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
                   </Control.select>
                 </Col>
               </Row>
@@ -94,6 +98,21 @@ class CommentForm extends Component {
                     name='author'
                     placeholder='Your Name'
                     className='form-control'
+                    validators={{
+                      required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15),
+                    }}
+                  />
+                  <Errors
+                    className='text-danger'
+                    model='.author'
+                    show='touched'
+                    messages={{
+                      required: 'Required ',
+                      minLength: 'Must be greater than 2 characters',
+                      maxLength: 'Must be 15 characters or less',
+                    }}
                   />
                 </Col>
               </Row>
