@@ -17,9 +17,26 @@ import {
 } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
 
-function RenderDish({ dish }) {
-  if (dish != null) {
+function RenderDish({ dish, errMess, isLoading }) {
+  if (isLoading) {
+    return (
+      <div className='container'>
+        <div className='row'>
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (errMess) {
+    return (
+      <div className='container'>
+        <div className='row'>
+          <h4>{errMess}</h4>
+        </div>
+      </div>
+    );
+  } else if (dish != null) {
     return (
       <Card>
         <CardImg top src={dish.image} alt={dish.name} />
