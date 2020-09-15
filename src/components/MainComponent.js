@@ -8,6 +8,7 @@ import {
   fetchDishes,
   fetchComments,
   fetchPromos,
+  fetchLeaders,
 } from '../redux/ActionCreators';
 import Header from './HeaderComponent';
 import Home from './HomeComponent';
@@ -37,12 +38,14 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
 });
 class Main extends Component {
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   render() {
@@ -59,7 +62,11 @@ class Main extends Component {
           }
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errMess}
-          leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+          leader={
+            this.props.leaders.leaders.filter((leader) => leader.featured)[0]
+          }
+          leaderLoading={this.props.leaders.isLoading}
+          leaderErrMess={this.props.leaders.errMess}
         />
       );
     };
@@ -108,7 +115,13 @@ class Main extends Component {
               <Route
                 exact
                 path='/aboutus'
-                component={() => <About leaders={this.props.leaders} />}
+                component={() => (
+                  <About
+                    leaders={this.props.leaders.leaders}
+                    leadersLoading={this.props.leaders.isLoading}
+                    leaderErrMess={this.props.leaders.errMess}
+                  />
+                )}
               />
               <Redirect to='/home' />
             </Switch>
