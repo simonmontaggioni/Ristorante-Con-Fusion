@@ -116,8 +116,8 @@ function About(props) {
         <div className='col-12'>
           {props.leadersLoading ? (
             <Loading />
-          ) : props.leaderErrMess ? (
-            <h4>{props.errMess}</h4>
+          ) : props.leadersErrMess ? (
+            <h4>{props.leadersErrMess}</h4>
           ) : (
             <Media list>{leaders}</Media>
           )}

@@ -24,7 +24,7 @@ export const fetchDishes = () => (dispatch) => {
     )
     .then((response) => response.json())
     .then((dishes) => dispatch(addDishes(dishes)))
-    .then((error) => dispatch(dishesFailed(error.message)));
+    .catch((error) => dispatch(dishesFailed(error.message)));
 };
 
 export const dishesLoading = () => ({
