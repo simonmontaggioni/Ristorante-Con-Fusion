@@ -7,18 +7,19 @@ import {
   CardHeader,
   Media,
 } from 'reactstrap';
+import { Fade, Stagger } from 'react-animation-components';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
-function RenderLeader({ leader, isLoading, errMess }) {
-  console.log(leader.image);
+function RenderLeader({ leader }) {
   return (
     <Media className='mb-4'>
       <Media left href='#'>
         <Media
           className='mr-4'
           object
-          src={leader.image}
+          src={`${baseUrl}${leader.image}`}
           alt='Generic placeholder image'
         />
       </Media>
@@ -35,7 +36,11 @@ function RenderLeader({ leader, isLoading, errMess }) {
 
 function About(props) {
   const leaders = props.leaders.map((leader) => {
-    return <RenderLeader leader={leader} />;
+    return (
+      <Fade in>
+        <RenderLeader leader={leader} />
+      </Fade>
+    );
   });
 
   return (
@@ -119,7 +124,9 @@ function About(props) {
           ) : props.leadersErrMess ? (
             <h4>{props.leadersErrMess}</h4>
           ) : (
-            <Media list>{leaders}</Media>
+            <Media list>
+              <Stagger in>{leaders}</Stagger>
+            </Media>
           )}
         </div>
       </div>
