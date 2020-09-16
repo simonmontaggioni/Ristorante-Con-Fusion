@@ -37,8 +37,8 @@ function RenderLeader({ leader }) {
 function About(props) {
   const leaders = props.leaders.map((leader) => {
     return (
-      <Fade in>
-        <RenderLeader leader={leader} />
+      <Fade in key={leader.id}>
+        <RenderLeader key={leader.id} leader={leader} />
       </Fade>
     );
   });
